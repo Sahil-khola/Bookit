@@ -11,7 +11,7 @@ app.use(express.json());
 
 
 //ROUTES ----->
-app.use("/", authRoutes);
+app.use("/api/auth", authRoutes);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URL).then(() => {

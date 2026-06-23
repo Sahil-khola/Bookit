@@ -59,6 +59,7 @@ async function logInUser(req,res) {
         await Otp.deleteMany({email , action:"account_Verification"});
         await Otp.create({email,otp,action:"account_Verification"});
         await sendOTPEmail(email,otp,"account_verification");
+        console.log("otp sent",otp);
         return res.status(400).json({message:"Please verify your account",error:"new OTP sent to your email"});
     }
     const token = jwt.sign({id:user._id,role:user.role},process.env.JWT_SECRET,{expiresIn:"7d"});
@@ -67,7 +68,7 @@ async function logInUser(req,res) {
 
 
 //VERIFY OTP------->
-async function verifyOtp() {
+async function verifyOtp(req,res) {
     const {email ,otp} = req.body;
     const otpRecord = await Otp.findOne({email , otp , action:"account_Verification"});
     if(!otpRecord){
