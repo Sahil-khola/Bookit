@@ -28,12 +28,23 @@ async function getEventById(req, res) {
   }
 }
 async function createEvent(req, res) {
-    const { title, description, location, date, category, availableSeats, ticketPrice, imageUrl} = req.body;
-    try {
-        const event = await Event.create({ title, description, location, date, category, availableSeats, ticketPrice, imageUrl});
-        res.status(201).json({message:"Event created successfully"},event);
+      try {
+        const { title, description, date, location, category, totalSeats, ticketPrice, image } = req.body;
+        const event = await Event.create({
+            title,
+            description,
+            date,
+            location,
+            category,
+            totalSeats,
+            availableSeats: totalSeats,
+            ticketPrice: ticketPrice || 0,
+            image: image || '',
+            createdBy: req.user.id
+        });
+        res.status(201).json(event);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ message: 'Server Error', error: error.message });
     }
 }
 async function updateEvent(req, res) {

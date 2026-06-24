@@ -3,7 +3,7 @@ import User from "../models/User.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-const protectMiddleware = async (req, res, next) => {
+const protect = async (req, res, next) => {
    const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
   if (token) {
     try {
@@ -21,12 +21,12 @@ const protectMiddleware = async (req, res, next) => {
   }
 };
 
-const organizerMiddleware = async (req,res,next) => {
-    if (req.user && req.user.role === "organizer") {
+const admin = async (req,res,next) => {
+    if (req.user && (req.user.role === "admin" || req.user.role === "organizer")) {
         next();
     } else {
         return res.status(403).json({ message: "Only organizers can access" });
     }
 }
 
-export {protectMiddleware,organizerMiddleware}
+export {protect,admin}

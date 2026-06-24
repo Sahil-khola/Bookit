@@ -8,14 +8,22 @@ import eventRoutes from "./routes/eventRoute.js";
 import bookingRoutes from "./routes/bookingRoute.js";
 
 const app = express();
-app.use(cors());
+
+app.use(
+  cors({
+    origin: [process.env.FRONTEND_URL, "http://localhost:5173", "http://localhost:5174"],
+    methods: ["GET", "POST", "DELETE", "UPDATE", "PUT"],
+    credentials: true,
+  })
+);
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
 //ROUTES ----->
 app.use("/api/auth", authRoutes);
-app.use("/api/event",eventRoutes );
-app.use("/api/booking",bookingRoutes );
+app.use("/api/events",eventRoutes );
+app.use("/api/bookings",bookingRoutes );
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URL).then(() => {

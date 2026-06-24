@@ -16,7 +16,7 @@ password:{
 },
 role:{
     type:String,
-    enum:["organizer","user"],
+    enum:["admin","user"],
     default:"user"
 },
 isVerified:{
