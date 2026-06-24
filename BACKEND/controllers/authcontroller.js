@@ -77,6 +77,7 @@ async function verifyOtp(req,res) {
 
     const user = await User.findOneAndUpdate({email},{isVerified:true});
     await Otp.deleteMany({email , action:"account_Verification"});
+    await Otp.create({email,otp,action:"account_Verification"});
 
     const token = jwt.sign({id:user._id,role:user.role},process.env.JWT_SECRET,{expiresIn:"7d"});
     res.status(200).json({message:"User verified successfully",_id:user._id,name:user.name,email:user.email,role:user.role,token});

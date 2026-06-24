@@ -1,4 +1,4 @@
-import Event from "../models/Event";
+import Event from "../models/Event.js";
 
 async function getAllEvent(req, res) {
   try {
@@ -63,5 +63,6 @@ async function deleteEvent(req, res) {
         res.status(500).json({ error: error.message });
     }
 }
+
 
 export { getAllEvent, getEventById, createEvent, deleteEvent, updateEvent };
