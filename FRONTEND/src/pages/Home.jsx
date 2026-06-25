@@ -136,7 +136,7 @@ const Home = () => {
             <footer className="mt-auto pt-16 pb-8 border-t border-gray-200 text-center">
                 <div className="flex justify-center items-center gap-2 mb-4">
                     <FaTicketAlt className="text-gray-800 text-2xl" />
-                    <span className="text-xl font-bold text-gray-900">Eventora</span>
+                    <span className="text-xl font-bold text-gray-900">Bookit</span>
                 </div>
                 <p className="text-gray-500 text-sm mb-6 max-w-md mx-auto">
                     The simplest, most dynamic way to manage, discover, and host world-class events in your local city. Let's make memories together.

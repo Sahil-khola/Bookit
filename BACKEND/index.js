@@ -6,6 +6,7 @@ dotenv.config();
 import authRoutes from "./routes/authRoutes.js";
 import eventRoutes from "./routes/eventRoute.js";
 import bookingRoutes from "./routes/bookingRoute.js";
+import wishlistRoutes from "./routes/wishlistRoutes.js";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes);
 app.use("/api/events",eventRoutes );
 app.use("/api/bookings",bookingRoutes );
+app.use("/api/wishlist",wishlistRoutes );
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URL).then(() => {

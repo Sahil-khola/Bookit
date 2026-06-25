@@ -22,6 +22,10 @@ role:{
 isVerified:{
     type:Boolean,
     default:false
+},
+whislist:{
+    type:[mongoose.Schema.Types.ObjectId],
+    ref:"Event"
 }
 })
 
