@@ -7,19 +7,20 @@ import jwt from "jsonwebtoken";
 
 // REGISTER USER---------->
 async function registerUser(req,res) {
-    const {name,email,password } = req.body;
+    const {name,email,password,role } = req.body;
 
     let existUser = await User.findOne({email});
     if (existUser) {
         return res.status(400).json({message:"User already exist"});
     }
 
-   if (name || email || password) {
+   if (name && email && password && role) {
        const salt = await bcrypt.genSalt(10);
        const hashedPassword = await bcrypt.hash(password,salt);
+       const userRole = role === 'admin' ? 'admin' : 'user';
     try {
 
-        const user = await User.create({name,email,password:hashedPassword,role:"user",isVerified:false});
+        const user = await User.create({name,email,password:hashedPassword,role:userRole,isVerified:false});
 
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
         console.log(`otp for ${email} is ${otp}`);

@@ -22,7 +22,7 @@ const sendOtp = async (req, res) => {
 
 const bookEvent = async (req, res) => {
   const { eventId, otp } = req.body;
- const otpRecord = await Otp.findOne({
+    const otpRecord = await Otp.findOne({
     email: req.user.email,
     otp: otp,
     action: "event_booking",

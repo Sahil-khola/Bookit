@@ -6,7 +6,7 @@
 
 - **Architecture:**
 	- **Backend:** Express, Node.js, Mongoose (MongoDB), Nodemailer for email, JWT for auth, clustering for workers.
-	- **Frontend:** React + Vite, Tailwind CSS, React Router, Axios (custom instance attaches JWT).
+	- **Frontend:** React + Vite, Tailwind CSS, React Router, Axios (custom instance attaches JWT) its make help of windfurl ai.
 	- **Communication:** REST API under `/api/*`, JSON web tokens for authenticated requests, email OTP for 2FA flows.
 
 - **Key Features:**

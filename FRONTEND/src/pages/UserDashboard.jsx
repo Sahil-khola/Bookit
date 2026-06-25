@@ -11,8 +11,13 @@ const UserDashboard = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (user === null) return;
         if (!user) {
             navigate('/login');
+            return;
+        }
+        if (user.role === 'admin') {
+            navigate('/admin');
             return;
         }
         fetchBookings();

@@ -16,6 +16,7 @@ const AdminDashboard = () => {
     });
 
     useEffect(() => {
+        if (user === null) return;
         if (!user || user.role !== 'admin') {
             navigate('/login');
             return;

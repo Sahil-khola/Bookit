@@ -39,23 +39,9 @@ mongoose.connect(process.env.MONGODB_URL).then(() => {
 })
 
 
-// Cluster from performance--->
-if (cluster.isPrimary) {
-  const numCPUs = os.cpus().length;
-  console.log(`Master ${process.pid} running with ${numCPUs} workers`);
 
-  for (let i = 0; i < numCPUs; i++) {
-    cluster.fork();
-  }
-
-  cluster.on("exit", (worker) => {
-    console.log(`Worker ${worker.process.pid} died, restarting...`);
-    cluster.fork();
-  });
-} else {
   const PORT = process.env.PORT || 8000;
 
   app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
   });
-}

@@ -7,6 +7,7 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [otp, setOtp] = useState('');
+    const [role, setRole] = useState('');
     const [showOTP, setShowOTP] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -20,12 +21,13 @@ const Register = () => {
         setError('');
         try {
             if (!showOTP) {
-                await register(name, email, password);
+                await register(name, email, password , role);
                 setShowOTP(true);
                 setError('');
             } else {
-                await verifyOtp(email, otp);
-                navigate('/dashboard');
+                const data = await verifyOtp(email, otp);
+                if (data?.role === 'admin') navigate('/admin');
+                else navigate('/dashboard');
             }
         } catch (err) {
             setError(err.response?.data?.message || err.message || 'Registration failed');
@@ -75,6 +77,19 @@ const Register = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">Role</label>
+                            <select
+                                required
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-700 transition shadow-sm"
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)}
+                            >
+                                <option value="">Select a role</option>
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                            </select>
                         </div>
                     </>
                 ) : (
