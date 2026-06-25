@@ -1,0 +1,18 @@
+{
+  "name": "bookit-fullstack",
+  "version": "1.0.0",
+  "description": "Full-stack event booking application",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix BACKEND\" \"npm run dev --prefix FRONTEND\"",
+    "build": "concurrently \"npm run build --prefix FRONTEND\"",
+    "start": "concurrently \"npm start --prefix BACKEND\" \"npm run preview --prefix FRONTEND\"",
+    "install-all": "npm install && npm install --prefix BACKEND && npm install --prefix FRONTEND"
+  },
+  "keywords": ["event", "booking"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

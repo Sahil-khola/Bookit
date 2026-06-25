@@ -40,22 +40,22 @@ mongoose.connect(process.env.MONGODB_URL).then(() => {
 
 
 // Cluster from performance--->
-if (cluser.isMaster) {
-    console.log(`Master ${process.pid} is running`);
-    console.log(os.cpus().length);
-    cluser.fork();
-    cluser.fork();
-    cluser.fork();
-}else{
-    http.createServer((req,res)=>{
-        setTimeout(() => {
-        res.end(`hello world ${process.pid}`);
-        }, 2000);
-    }).listen(3000);
-    console.log("http://localhost:3000");
-}
-const PORT = process.env.PORT || 8000;
+if (cluster.isPrimary) {
+  const numCPUs = os.cpus().length;
+  console.log(`Master ${process.pid} running with ${numCPUs} workers`);
 
-app.listen(PORT, () => {
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on("exit", (worker) => {
+    console.log(`Worker ${worker.process.pid} died, restarting...`);
+    cluster.fork();
+  });
+} else {
+  const PORT = process.env.PORT || 8000;
+
+  app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
-});
+  });
+}
