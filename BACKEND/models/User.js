@@ -23,7 +23,7 @@ isVerified:{
     type:Boolean,
     default:false
 },
-whislist:{
+wishlist:{
     type:[mongoose.Schema.Types.ObjectId],
     ref:"Event"
 }

@@ -24,6 +24,8 @@ const Navbar = () => {
                         <Link to="/" className="text-gray-200 hover:text-white transition cursor-pointer">Events</Link>
                         {user ? (
                             <>
+                                <Link to="/wishlist" className="text-gray-200 hover:text-white transition">Wishlist</Link>
+
                                 <Link to={user.role === 'admin' ? '/admin' : '/dashboard'} className="text-gray-200 hover:text-white transition">Dashboard</Link>
                                 <button onClick={handleLogout} className="bg-gray-700 hover:bg-black text-white px-4 py-2 rounded-md transition">Logout</button>
                             </>

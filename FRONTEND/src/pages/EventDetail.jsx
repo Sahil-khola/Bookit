@@ -15,6 +15,8 @@ const EventDetail = () => {
     const [showOTP, setShowOTP] = useState(false);
     const [error, setError] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
+    const [wishlistLoading, setWishlistLoading] = useState(false);
+    const [isWishlisted, setIsWishlisted] = useState(false);
 
     useEffect(() => {
         const fetchEvent = async () => {
@@ -30,6 +32,23 @@ const EventDetail = () => {
         fetchEvent();
     }, [id]);
 
+      useEffect(() => {
+        if (!user || !event) {
+            setIsWishlisted(false);
+            return;
+        }
+
+        const fetchWishlist = async () => {
+            try {
+                const { data } = await api.get('/wishlist');
+                setIsWishlisted(data.some((item) => item._id === event._id));
+            } catch (err) {
+                console.error('Error fetching wishlist status', err);
+            }
+        };
+
+        fetchWishlist();
+    }, [user, event]);
     const handleBooking = async () => {
         if (!user) {
             navigate('/login');

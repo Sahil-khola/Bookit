@@ -9,6 +9,7 @@ import UserDashboard from './pages/UserDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import PaymentSuccess from './pages/PaymentSucess';
 import PaymentFailed from './pages/PaymentFailed';
+import Wishlist from './pages/Wishlist';
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                         <Route path="/register" element={<Register />} />
                         <Route path="/dashboard" element={<UserDashboard />} />
                         <Route path="/admin" element={<AdminDashboard />} />
+                        <Route path="/wishlist" element={<Wishlist />} />
                         <Route path="/payment-success" element={<PaymentSuccess />} />
                         <Route path="/payment-failed" element={<PaymentFailed />} />
                         <Route path="*" element={<h1 className="text-3xl font-bold text-center mt-20">404 - Page Not Found</h1>} />
