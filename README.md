@@ -24,8 +24,7 @@ Bookit is a full-stack MERN application that allows users to seamlessly browse, 
 
 ## 🚀 Setup Instructions
 ## important point ----> for admin use it -
-email = admin@gmail.com
-password = admin
+
 Follow these steps to get the app running locally.
 
 1. Install dependencies

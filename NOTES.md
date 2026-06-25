@@ -5,7 +5,7 @@
 - **Purpose:** Enable users to browse events, request bookings (free or paid), and let admins confirm bookings and payments.
 
 - **Architecture:**
-	- **Backend:** Express, Node.js, Mongoose (MongoDB), Nodemailer for email, JWT for auth, clustering for workers.
+	- **Backend:** Express, Node.js, Mongoose (MongoDB), Nodemailer for email, JWT for auth.
 	- **Frontend:** React + Vite, Tailwind CSS, React Router, Axios (custom instance attaches JWT) its make help of windfurl ai.
 	- **Communication:** REST API under `/api/*`, JSON web tokens for authenticated requests, email OTP for 2FA flows.
 
