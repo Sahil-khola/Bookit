@@ -45,6 +45,12 @@ const UserDashboard = () => {
         }
     };
 
+    const formatDate = (value) => {
+        if (!value) return 'Unknown date';
+        const date = new Date(value);
+        return Number.isNaN(date.getTime()) ? 'Unknown date' : date.toLocaleDateString();
+    };
+
     if (loading) return <div className="text-center py-20 text-xl font-semibold">Loading dashboard...</div>;
 
     return (
@@ -102,9 +108,9 @@ const UserDashboard = () => {
                                             </div>
                                         </div>
                                         <div className="text-sm text-gray-500 mb-4 space-y-1">
-                                            <p><strong className="text-gray-700">Date:</strong> {new Date(booking.eventId.date).toLocaleDateString()}</p>
+                                            <p><strong className="text-gray-700">Date:</strong> {formatDate(booking.eventId?.date)}</p>
                                             <p><strong className="text-gray-700">Amount:</strong> {booking.amount === 0 ? 'Free' : `₹${booking.amount}`}</p>
-                                            <p><strong className="text-gray-700">Requested:</strong> {new Date(booking.bookedAt).toLocaleDateString()}</p>
+                                            <p><strong className="text-gray-700">Requested:</strong> {formatDate(booking.createdAt)}</p>
                                         </div>
                                     </>
                                 ) : (
