@@ -104,7 +104,8 @@ const UserDashboard = () => {
                                                         }`}>
                                                         {booking.paymentStatus.replace('_', ' ')}
                                                     </span>
-                                                )}
+                                                )}d
+                                                
                                             </div>
                                         </div>
                                         <div className="text-sm text-gray-500 mb-4 space-y-1">
