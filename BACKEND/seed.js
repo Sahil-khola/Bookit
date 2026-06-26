@@ -10,15 +10,15 @@ dotenv.config();
 
 const users = [
     { name: 'Admin User', email: 'admin@.com', password: 'password123', role: 'admin' },
-    { name: 'Demo User', email: 'user@eventora.com', password: 'password123', role: 'user' },
-    { name: 'Alice Smith', email: 'alice@eventora.com', password: 'password123', role: 'user' },
-    { name: 'Bob Johnson', email: 'bob@eventora.com', password: 'password123', role: 'user' },
-    { name: 'Charlie Dave', email: 'charlie@eventora.com', password: 'password123', role: 'user' },
-    { name: 'Diana Prince', email: 'diana@eventora.com', password: 'password123', role: 'user' },
-    { name: 'Ethan Hunt', email: 'ethan@eventora.com', password: 'password123', role: 'user' },
-    { name: 'Fiona Gallagher', email: 'fiona@eventora.com', password: 'password123', role: 'user' },
-    { name: 'George Miller', email: 'george@eventora.com', password: 'password123', role: 'user' },
-    { name: 'Hannah Montana', email: 'hannah@eventora.com', password: 'password123', role: 'user' }
+    { name: 'Demo User', email: 'user@bokit.com', password: 'password123', role: 'user' },
+    { name: 'Alice Smith', email: 'alice@bookit.com', password: 'password123', role: 'user' },
+    { name: 'Bob Johnson', email: 'bob@bookit.com', password: 'password123', role: 'user' },
+    { name: 'Charlie Dave', email: 'charlie@bookit.com', password: 'password123', role: 'user' },
+    { name: 'Diana Prince', email: 'diana@bookit.com', password: 'password123', role: 'user' },
+    { name: 'Ethan Hunt', email: 'ethan@bookit.com', password: 'password123', role: 'user' },
+    { name: 'Fiona Gallagher', email: 'fiona@bookit.com', password: 'password123', role: 'user' },
+    { name: 'George Miller', email: 'george@bookit.com', password: 'password123', role: 'user' },
+    { name: 'Hannah Montana', email: 'hannah@bookit.com', password: 'password123', role: 'user' }
 ];
 
 const events = [
