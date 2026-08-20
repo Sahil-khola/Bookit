@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
+import path from "path";
+import { fileURLToPath } from "url";
 dotenv.config();
 import authRoutes from "./routes/authRoutes.js";
 import eventRoutes from "./routes/eventRoute.js";
@@ -11,6 +13,8 @@ import http from "http";
 import os from "os";
 import cluster from "cluster";
 const cluser = cluster;
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
@@ -30,6 +34,13 @@ app.use("/api/auth", authRoutes);
 app.use("/api/events",eventRoutes );
 app.use("/api/bookings",bookingRoutes );
 app.use("/api/wishlist",wishlistRoutes );
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '..', 'FRONTEND', 'dist')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'FRONTEND', 'dist', 'index.html'));
+  });
+}
 
 // Connect to MongoDB----->
 mongoose.connect(process.env.MONGODB_URL).then(() => {

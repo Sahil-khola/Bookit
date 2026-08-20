@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix BACKEND\" \"npm run dev --prefix FRONTEND\"",
-    "build": "concurrently \"npm run build --prefix FRONTEND\"",
-    "start": "concurrently \"npm start --prefix BACKEND\" \"npm run preview --prefix FRONTEND\"",
+    "build": "npm run build --prefix FRONTEND",
+    "start": "npm start --prefix BACKEND",
     "install-all": "npm install && npm install --prefix BACKEND && npm install --prefix FRONTEND"
   },
   "keywords": ["event", "booking"],
