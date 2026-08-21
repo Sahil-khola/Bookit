@@ -7,6 +7,7 @@
     "dev": "concurrently \"npm run dev --prefix BACKEND\" \"npm run dev --prefix FRONTEND\"",
     "build": "npm install --prefix FRONTEND && npm run build --prefix FRONTEND",
     "start": "npm install --prefix BACKEND && npm start --prefix BACKEND",
+    "seed": "node --prefix BACKEND seed.js",
     "install-all": "npm install && npm install --prefix BACKEND && npm install --prefix FRONTEND"
   },
   "keywords": ["event", "booking"],
