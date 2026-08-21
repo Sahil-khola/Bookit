@@ -6,7 +6,7 @@ import EventDetail from './pages/EventDetail';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import UserDashboard from './pages/UserDashboard';
-import AdminDashboard from './pages/AdminDashboard';
+import AdminDashBoard from './pages/AdminDashBoard';
 import PaymentSuccess from './pages/PaymentSucess';
 import PaymentFailed from './pages/PaymentFailed';
 import Wishlist from './pages/Wishlist';
@@ -23,7 +23,7 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/dashboard" element={<UserDashboard />} />
-                        <Route path="/admin" element={<AdminDashboard />} />
+                        <Route path="/admin" element={<AdminDashBoard />} />
                         <Route path="/wishlist" element={<Wishlist />} />
                         <Route path="/payment-success" element={<PaymentSuccess />} />
                         <Route path="/payment-failed" element={<PaymentFailed />} />
