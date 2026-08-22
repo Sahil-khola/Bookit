@@ -20,19 +20,19 @@ const seedData = async () => {
     await Booking.deleteMany({});
     await OTP.deleteMany({});
 
-    const hashedPassword = await bcrypt.hash("Admin@123", 10);
+    const hashedPassword = await bcrypt.hash("Sahi@123", 10);
 
     const users = await User.insertMany([
       {
-        name: "Admin User",
-        email: "admin@example.com",
+        name: "Admin",
+        email: "admin@gmail.com",
         password: hashedPassword,
         role: "admin",
         isVerified: true,
       },
       {
-        name: "Test User",
-        email: "user@example.com",
+        name: "Sahil Khola",
+        email: "sahilkhola7202@gmail.com",
         password: hashedPassword,
         role: "user",
         isVerified: true,
