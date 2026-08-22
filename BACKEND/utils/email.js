@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
-     host: process.env.SMTP_HOST,
+    host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
     service: process.env.SMTP_SERVICE,
     secure: true,
@@ -11,7 +11,9 @@ const transporter = nodemailer.createTransport({
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
     },
-    family: 4,
+    lookup: (hostname, options, callback) => {
+        require('dns').lookup(hostname, { family: 4, all: false }, callback);
+    },
     connectionTimeout: 15000,
     tls: {
         rejectUnauthorized: false
