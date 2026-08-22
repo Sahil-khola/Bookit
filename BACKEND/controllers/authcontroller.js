@@ -60,7 +60,12 @@ async function logInUser(req,res) {
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
         await Otp.deleteMany({email , action:"account_Verification"});
         await Otp.create({email,otp,action:"account_Verification"});
-        await sendOTPEmail(email,otp,"account_verification");
+        try {
+            await sendOTPEmail(email,otp,"account_verification");
+        } catch (error) {
+            console.error("Error sending OTP email:", error);
+            return res.status(500).json({message:"Failed to send OTP email",error:error.message});
+        }
         console.log("otp sent",otp);
         return res.status(400).json({message:"Please verify your account",error:"new OTP sent to your email"});
     }
