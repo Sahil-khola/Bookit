@@ -25,7 +25,11 @@ async function registerUser(req,res) {
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
         console.log(`otp for ${email} is ${otp}`);
         await Otp.create({email,otp,action:"account_Verification"});
-        await sendOTPEmail(email,otp,"account_verification");
+        try {
+            await sendOTPEmail(email,otp,"account_verification");
+        } catch (error) {
+            console.error("Error sending OTP email:", error);
+        }
         res.status(201).json({message:"User created successfully and otp sent",user});
 
 
