@@ -1,28 +1,37 @@
-import  nodemailer  from 'nodemailer';
+import nodemailer from 'nodemailer';
 import dotenv from "dotenv";
 dotenv.config();
 
-const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    service: process.env.SMTP_SERVICE,
-    secure: true,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    },
-    lookup: (hostname, options, callback) => {
-        require('dns').lookup(hostname, { family: 4, all: false }, callback);
-    },
-    connectionTimeout: 15000,
-    tls: {
-        rejectUnauthorized: false
-    }
-});
+let transporter = null;
+let useResend = false;
+
+if (process.env.RESEND_API_KEY) {
+    const { Resend } = await import('resend');
+    transporter = new Resend(process.env.RESEND_API_KEY);
+    useResend = true;
+} else {
+    transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        service: process.env.SMTP_SERVICE,
+        secure: true,
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+        },
+        lookup: (hostname, options, callback) => {
+            require('dns').lookup(hostname, { family: 4, all: false }, callback);
+        },
+        connectionTimeout: 15000,
+        tls: {
+            rejectUnauthorized: false
+        }
+    });
+}
 
 const sendBookingEmail = async (userEmail, userName, eventTitle) => {
     const mailOptions = {
-        from: process.env.EMAIL_USER,
+        from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
         to: userEmail,
         subject: `Booking Confirmed: ${eventTitle}`,
         html: `
@@ -31,8 +40,24 @@ const sendBookingEmail = async (userEmail, userName, eventTitle) => {
         <p>Thank you for choosing Bookit .</p>
       `
     };
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully to', userEmail, info.messageId);
+
+    if (useResend) {
+        const { data, error } = await transporter.emails.send({
+            from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
+            to: userEmail,
+            subject: `Booking Confirmed: ${eventTitle}`,
+            html: `
+            <h2>Hi ${userName}!</h2>
+            <p>Your booking for the event <strong>${eventTitle}</strong> is successfully confirmed.</p>
+            <p>Thank you for choosing Bookit .</p>
+          `
+        });
+        if (error) throw error;
+        console.log('Email sent successfully to', userEmail, data?.id);
+    } else {
+        const info = await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully to', userEmail, info.messageId);
+    }
 };
 
 const sendOTPEmail = async (userEmail, otp, type) => {
@@ -41,23 +66,36 @@ const sendOTPEmail = async (userEmail, otp, type) => {
         ? 'Please use the following OTP to verify your new Bookit  account.'
         : 'Please use the following OTP to verify and confirm your event booking.';
 
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: userEmail,
-        subject: title,
-        html: `
-            <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px;">
-                <h2 style="color: #111;">${title}</h2>
-                <p style="color: #555; font-size: 16px;">${msg}</p>
-                <div style="margin: 20px auto; padding: 15px; font-size: 24px; font-weight: bold; background: #f4f4f4; width: max-content; letter-spacing: 5px;">
-                    ${otp}
-                </div>
-                <p style="color: #999; font-size: 12px;">This code expires in 5 minutes. If you didn't request this, please ignore this email.</p>
+    const html = `
+        <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px;">
+            <h2 style="color: #111;">${title}</h2>
+            <p style="color: #555; font-size: 16px;">${msg}</p>
+            <div style="margin: 20px auto; padding: 15px; font-size: 24px; font-weight: bold; background: #f4f4f4; width: max-content; letter-spacing: 5px;">
+                ${otp}
             </div>
-        `
-    };
-    const info = await transporter.sendMail(mailOptions);
-    console.log(`OTP sent to ${userEmail} for ${type} is ${otp}`, info.messageId);
+            <p style="color: #999; font-size: 12px;">This code expires in 5 minutes. If you didn't request this, please ignore this email.</p>
+        </div>
+    `;
+
+    if (useResend) {
+        const { data, error } = await transporter.emails.send({
+            from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
+            to: userEmail,
+            subject: title,
+            html
+        });
+        if (error) throw error;
+        console.log(`OTP sent to ${userEmail} for ${type} is ${otp}`, data?.id);
+    } else {
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: userEmail,
+            subject: title,
+            html
+        };
+        const info = await transporter.sendMail(mailOptions);
+        console.log(`OTP sent to ${userEmail} for ${type} is ${otp}`, info.messageId);
+    }
 };
 
 export { sendOTPEmail, sendBookingEmail };
